@@ -5,15 +5,15 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import interfaces.IPharasesService;
-import interfaces.IPhrasesRepository;
+import interfaces.IService;
+import interfaces.IRepository;
 import model.Data;
 import model.Phrases;
 
 @Service
-public class PhrasesService implements IPharasesService {
+public class PhrasesService implements IService<Phrases> {
 	@Autowired
-	private IPhrasesRepository phrasesRepository;
+	private IRepository<Phrases> phrasesRepository;
 
 	@Override
 	public Data<Phrases> findAll() {

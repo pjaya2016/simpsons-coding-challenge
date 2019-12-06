@@ -12,12 +12,12 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 
 import interfaces.IDataBase;
-import interfaces.IPhrasesRepository;
+import interfaces.IRepository;
 import model.Data;
 import model.Phrases;
 
 @Component
-public class PhrasesRepository implements IPhrasesRepository {
+public class PhrasesRepository implements IRepository<Phrases> {
 	@Autowired
 	IDataBase<Phrases> pharasesUtility;
 

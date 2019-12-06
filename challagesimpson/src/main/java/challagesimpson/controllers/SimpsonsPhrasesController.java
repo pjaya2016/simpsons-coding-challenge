@@ -2,7 +2,7 @@ package challagesimpson.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import interfaces.IPharasesService;
+import interfaces.IService;
 import model.Data;
 import model.Phrases;
 
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class SimpsonsPhrasesController {
 
 	@Autowired
-	IPharasesService phrasesService;
+	IService<Phrases> phrasesService;
 	
 	// Aggregate root
 	@GetMapping("/phrases")

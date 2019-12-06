@@ -10,10 +10,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import interfaces.IDataBase;
-import interfaces.IPharasesService;
-import interfaces.IPhrasesRepository;
+import interfaces.IService;
+import model.Characters;
+import model.Phrases;
+import interfaces.IRepository;
+import repository.CharactersRepository;
 import repository.PhrasesRepository;
+import service.CharactersService;
 import service.PhrasesService;
+import utility.CharactersUtility;
 import utility.PharasesUtility;
 
 @Configuration
@@ -34,21 +39,39 @@ public class AppConfig {
 	};
 	
 	@Bean
-	public IDataBase GetUtility() 
+	public IDataBase<Phrases> getUtilityPhrases() 
 	{
 		return new PharasesUtility();
 	};
 	
 	@Bean
-	public IPhrasesRepository GetPhrasesRepository() 
+	public IRepository<Phrases> getPhrasesRepository() 
 	{
 		return new PhrasesRepository();
 	};
 	
 	@Bean
-	public IPharasesService GetPharasesService() 
+	public IService<Phrases> getPharasesService() 
 	{
 		return new PhrasesService();
+	};
+	
+	@Bean
+	public IDataBase<Characters> getUtilityCharacters() 
+	{
+		return new CharactersUtility();
+	};
+	
+	@Bean
+	public IRepository<Characters> getCharactersRepository() 
+	{
+		return new CharactersRepository();
+	};
+	
+	@Bean
+	public IService<Characters> getCharactersService() 
+	{
+		return new CharactersService();
 	};
 	
 }

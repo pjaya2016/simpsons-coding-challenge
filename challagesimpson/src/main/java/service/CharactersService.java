@@ -2,32 +2,39 @@ package service;
 
 import java.util.ArrayList;
 
-import interfaces.IPharasesService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import interfaces.IRepository;
+import interfaces.IService;
+import model.Characters;
 import model.Data;
 import model.Phrases;
 
-public class CharactersService implements IPharasesService {
-
+public class CharactersService implements IService<Characters> {
+	
+	@Autowired
+	private IRepository<Characters> charactersRepository;
+	
 	@Override
-	public Data<Phrases> findAll() {
+	public Data<Characters> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Phrases findById(String id) {
+	public Characters findById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public ArrayList<Phrases> deleteById(String id) {
+	public ArrayList<Characters> deleteById(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Phrases save(Phrases p) {
+	public Characters save(Characters p) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,16 +1,8 @@
 package utility;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +14,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import abstract_class.Utility;
-import challagesimpson.Application;
 import interfaces.IDataBase;
-import model.Characters;
 import model.Data;
 import model.Phrases;
-
-
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
-import com.google.common.collect.ImmutableList;
 
 @Component
 public class PharasesUtility extends Utility implements IDataBase<Phrases> 
@@ -50,6 +34,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 		gson = gn;
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Data<Phrases> get()
 	{
@@ -126,7 +111,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 			phrases.set(index, (Phrases)obj);
 			data.setData(new ArrayList<Phrases>(phrases));	
 			database.put("Phrases_tbl",gson.toJson(data));	  
-			return phrases.get(index);
+			return (Phrases) data.getData().get(index);
 		}	
 	}
 	

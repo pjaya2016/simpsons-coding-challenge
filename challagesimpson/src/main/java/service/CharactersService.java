@@ -8,7 +8,6 @@ import interfaces.IRepository;
 import interfaces.IService;
 import model.Characters;
 import model.Data;
-import model.Phrases;
 
 public class CharactersService implements IService<Characters> {
 	

@@ -20,6 +20,7 @@ import model.Data;
 public class CharactersUtility extends Utility implements IDataBase<Characters>
 {
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public Data<Characters> get() {
 		Data<Characters> emp = null;
@@ -38,6 +39,7 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 
 	@Override
 	public Characters getById(String id) {
+
 		ArrayList<Object> json = (ArrayList<Object>)get().getData();
 		String str = gson.toJson(json);
 		ObjectMapper mapper = objMapper;		
@@ -74,7 +76,6 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 		Characters objP = (Characters) obj;
 		if(getById(objP.get_id()) == null) 
 		{
-		
 			ArrayList<Characters> lst = new ArrayList<Characters>(charactersLst);
 			lst.add(objP);
 			data.setData(lst);	
@@ -95,7 +96,7 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 			data.setData(new ArrayList<Characters>(charactersLst));
 			
 			database.put("Characters_tbl",gson.toJson(charactersLst));	  
-			return charactersLst.get(index);
+			return (Characters) data.getData().get(index);
 		}
 	}
 

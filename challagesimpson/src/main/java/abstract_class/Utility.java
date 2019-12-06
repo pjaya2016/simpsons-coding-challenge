@@ -6,6 +6,8 @@ import java.nio.file.Files;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
@@ -15,16 +17,26 @@ public abstract class Utility {
 	protected ObjectMapper objMapper;
 	protected Gson gson;
 	protected static Map<String, String> database = new HashMap<String, String>();
+	
+	@Value("${table.pharase}")
+	private String pharaseTableName;
 
+	@Value("${table.characters}")
+	private String charactersTableName;
+	
+	@Value("${file.phrases}")
+	private String pharaseFilePath;
+	
+	@Value("${file.characters}")
+	private String charactersFilePath;
+	
 	public abstract void GetObjectMapper(ObjectMapper objectMapper);
 
 	public abstract void GetObjectMapper(Gson gn);
 
 	protected String GetFile(String fileName) {
 		ClassLoader classLoader = new Application().getClass().getClassLoader();
-
 		File file = new File(classLoader.getResource(fileName).getFile());
-
 		String content = "";
 		try {
 			content = new String(Files.readAllBytes(file.toPath()));
@@ -38,14 +50,15 @@ public abstract class Utility {
 
 	protected Object seedInMemoryDataBase(String tblName) {
 
-		if (!database.containsKey("Phrases_tbl")) {
-			String phrasesData = GetFile("Files/phrases.json");
-			database.put("Phrases_tbl", phrasesData);
+		System.out.print(charactersTableName);
+		if (!database.containsKey(pharaseTableName)) {
+			String phrasesData = GetFile(pharaseFilePath);
+			database.put(pharaseTableName, phrasesData);
 		}
 		
-		if (!database.containsKey("Characters_tbl")) {
-			String charactersData = GetFile("Files/characters.json");
-			database.put("Characters_tbl", charactersData);
+		if (!database.containsKey(charactersTableName)) {
+			String charactersData = GetFile(charactersFilePath);
+			database.put(charactersTableName, charactersData);
 		}
 		
 		return database.get(tblName);

@@ -1,6 +1,11 @@
 package utility;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -12,13 +17,13 @@ import interfaces.IDataBase;
 import model.Characters;
 import model.Data;
 
-public class CharactersUtility extends Utility implements IDataBase<Characters>  {
-
+public class CharactersUtility extends Utility implements IDataBase<Characters>
+{
+	
 	@Override
 	public Data<Characters> get() {
 		Data<Characters> emp = null;
 		try {
-	   
 		//create ObjectMapper instance
 	    ObjectMapper objectMapper = objMapper;
 	    
@@ -33,44 +38,94 @@ public class CharactersUtility extends Utility implements IDataBase<Characters> 
 
 	@Override
 	public Characters getById(String id) {
-		// TODO Auto-generated method stub
+		ArrayList<Object> json = (ArrayList<Object>)get().getData();
+		String str = gson.toJson(json);
+		ObjectMapper mapper = objMapper;		
+
+		try {
+			mapper.readValue(str, Characters[].class);
+			List<Characters> charactersLst = Arrays.asList(mapper.readValue(str, Characters[].class));
+			
+			Characters result = charactersLst.stream()                        
+	                .filter(o -> o.get_id().equals(id))        
+	                .findAny()                           
+	                .orElse(null);  
+			return result; 
+		} catch (JsonMappingException e) {
+
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+
+			e.printStackTrace();
+		}	
 		return null;
 	}
 
 	@Override
 	public Characters updateOrcreate(String id, Object obj) throws JsonMappingException, JsonProcessingException {
-		// TODO Auto-generated method stub
-		return null;
+	    
+		Data<Characters> data = get();
+		ArrayList<Object> json = (ArrayList<Object>)data.getData();
+		String str = gson.toJson(json);
+		ObjectMapper mapper = objMapper;
+		
+		List<Characters> charactersLst = Arrays.asList(mapper.readValue(str, Characters[].class));
+		
+		Characters objP = (Characters) obj;
+		if(getById(objP.get_id()) == null) 
+		{
+		
+			ArrayList<Characters> lst = new ArrayList<Characters>(charactersLst);
+			lst.add(objP);
+			data.setData(lst);	
+			database.put("Characters_tbl",gson.toJson(data));	
+			return objP;
+		}
+		else 
+		{
+			Characters p = charactersLst.stream()
+					.filter(o -> id.equals(o.get_id()))
+					.findAny()
+					.orElse(null);
+			
+			int index = charactersLst.indexOf(p); // index
+			
+			charactersLst.set(index, (Characters)obj);
+			
+			data.setData(new ArrayList<Characters>(charactersLst));
+			
+			database.put("Characters_tbl",gson.toJson(charactersLst));	  
+			return charactersLst.get(index);
+		}
 	}
 
 	@Override
 	public ArrayList<Characters> detete(String id) throws JsonMappingException, JsonProcessingException {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void GetObjectMapper(ObjectMapper objectMapper) {
-		// TODO Auto-generated method stub
+	
+		Data<Characters> data = get();
 		
-	}
-
-	@Override
-	public void GetObjectMapper(Gson gn) {
-		// TODO Auto-generated method stub
+		ArrayList<Object> json = (ArrayList<Object>)data.getData();
+		String str = gson.toJson(json);
+		ObjectMapper mapper = objMapper;
 		
+		mapper.readValue(str, Characters[].class);
+		List<Characters> charactersLst = Arrays.asList(mapper.readValue(str, Characters[].class)).stream()
+			    .filter(p -> !p.get_id().equals(id)).collect(Collectors.toList());
+		
+		data.setData(new ArrayList<Characters>(charactersLst));	
+		database.put("Phrases_tbl",gson.toJson(data));	  
+		return data.getData();
 	}
 
-	@Override
-	protected String GetFile(String fileName) {
-		// TODO Auto-generated method stub
-		return null;
+	@Autowired
+	public void GetObjectMapper(ObjectMapper objectMapper) 
+	{
+		objMapper = objectMapper;
 	}
-
-	@Override
-	protected Object seedInMemoryDataBase(String empId) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	@Autowired
+	public void GetObjectMapper(Gson gn) 
+	{
+		gson = gn;
 	}
-
 }

@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import interfaces.IDataBase;
 import interfaces.IRepository;
 import model.Characters;
@@ -22,20 +24,30 @@ public class CharactersRepository implements IRepository<Characters>{
 
 	@Override
 	public Characters findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.print(id);
+		return charactersUtility.getById(id);
 	}
 
 	@Override
 	public ArrayList<Characters> deleteById(String id) {
-		// TODO Auto-generated method stub
+		try {
+			return charactersUtility.detete(id);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
 	@Override
-	public Phrases save(Characters p) {
-		// TODO Auto-generated method stub
+	public Characters save(Characters p) {
+		try {
+			return charactersUtility.updateOrcreate(p.get_id(), p);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
+
+	
 
 }

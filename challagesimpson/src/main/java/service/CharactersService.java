@@ -17,26 +17,22 @@ public class CharactersService implements IService<Characters> {
 	
 	@Override
 	public Data<Characters> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return charactersRepository.findAll();
 	}
 
 	@Override
 	public Characters findById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return charactersRepository.findById(id);
 	}
 
 	@Override
 	public ArrayList<Characters> deleteById(String id) {
-		// TODO Auto-generated method stub
-		return null;
+		return charactersRepository.deleteById(id);
 	}
 
 	@Override
 	public Characters save(Characters p) {
-		// TODO Auto-generated method stub
-		return null;
+		return charactersRepository.save(p);
 	}
 
 }

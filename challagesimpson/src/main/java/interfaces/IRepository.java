@@ -14,6 +14,6 @@ public interface IRepository<T> {
 
 	ArrayList<T> deleteById(String id);
 	
-	Phrases save(T p);
+	T save(T p);
 
 }

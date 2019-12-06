@@ -92,23 +92,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 			e.printStackTrace();
 		}	
 		return null;
-	}
-	
-	protected String GetFile(String fileName)
-	{
-        ClassLoader classLoader = new Application().getClass().getClassLoader();
-       
-        File file = new File(classLoader.getResource(fileName).getFile());
-		
-        String content = "";
-        try {
-			 content = new String(Files.readAllBytes(file.toPath()));
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-        return content;
-	}
+	}	
 	
 	@Override
 	public Phrases updateOrcreate(String id,Object obj) throws JsonMappingException, JsonProcessingException 
@@ -142,7 +126,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 			phrases.set(index, (Phrases)obj);
 			data.setData(new ArrayList<Phrases>(phrases));	
 			database.put("Phrases_tbl",gson.toJson(data));	  
-			return p;
+			return phrases.get(index);
 		}	
 	}
 	
@@ -162,15 +146,5 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 		data.setData(new ArrayList<Phrases>(phrasesLst));	
 		database.put("Phrases_tbl",gson.toJson(data));	  
 		return data.getData();
-	}
-	
-	protected Object seedInMemoryDataBase(String tblName) {    
-		      	    
-		 if(!database.containsKey("Phrases_tbl")){
-		  String phrasesData = GetFile("Files/phrases.json");   
-	      database.put("Phrases_tbl",phrasesData);	  
-	     }
-	      return database.get(tblName);		
-	   }
-	
+	}	
 }

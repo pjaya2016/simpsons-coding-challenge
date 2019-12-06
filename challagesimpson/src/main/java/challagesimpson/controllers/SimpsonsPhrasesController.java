@@ -2,9 +2,9 @@ package challagesimpson.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
+import interfaces.IPharasesService;
 import model.Data;
 import model.Phrases;
-import service.IPharasesService;
 
 import java.util.ArrayList;
 

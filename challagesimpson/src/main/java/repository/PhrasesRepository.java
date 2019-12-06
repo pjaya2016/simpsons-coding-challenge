@@ -11,9 +11,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 
+import interfaces.IDataBase;
+import interfaces.IPhrasesRepository;
 import model.Data;
 import model.Phrases;
-import utility.IDataBase;
 
 @Component
 public class PhrasesRepository implements IPhrasesRepository {

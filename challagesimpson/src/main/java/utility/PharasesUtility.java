@@ -20,7 +20,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+
+import abstractClass.Utility;
 import challagesimpson.Application;
+import interfaces.IDataBase;
 import model.Characters;
 import model.Data;
 import model.Phrases;
@@ -32,13 +35,8 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 
 @Component
-public class PharasesUtility implements IDataBase 
+public class PharasesUtility extends Utility implements IDataBase 
 {
-	
-	private ObjectMapper objMapper;
-	private Gson gson;
-	private static Map<String, String> database = new HashMap<String, String>();
-	
 	public Data<Characters> GetCharactersData()
 	{
 		Data<Characters> emp = null;
@@ -112,7 +110,7 @@ public class PharasesUtility implements IDataBase
 		return null;
 	}
 	
-	private String GetFile(String fileName)
+	protected String GetFile(String fileName)
 	{
         ClassLoader classLoader = new Application().getClass().getClassLoader();
        
@@ -182,7 +180,7 @@ public class PharasesUtility implements IDataBase
 		return data.getData();
 	}
 	
-	private Object seedInMemoryDataBase(String empId) {    
+	protected Object seedInMemoryDataBase(String empId) {    
 		      	    
 		 if(!database.containsKey("Phrases_tbl")){
 		  String phrasesData = GetFile("Files/phrases.json");   

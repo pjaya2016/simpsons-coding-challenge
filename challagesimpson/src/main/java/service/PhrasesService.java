@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import interfaces.IPharasesService;
+import interfaces.IPhrasesRepository;
 import model.Data;
 import model.Phrases;
-import repository.IPhrasesRepository;
 
 @Service
 public class PhrasesService implements IPharasesService {

@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Scope;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import repository.IPhrasesRepository;
+import interfaces.IDataBase;
+import interfaces.IPharasesService;
+import interfaces.IPhrasesRepository;
 import repository.PhrasesRepository;
-import service.IPharasesService;
 import service.PhrasesService;
-import utility.IDataBase;
 import utility.PharasesUtility;
 
 @Configuration

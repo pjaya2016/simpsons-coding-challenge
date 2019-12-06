@@ -21,7 +21,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import abstractClass.Utility;
+import abstract_class.Utility;
 import challagesimpson.Application;
 import interfaces.IDataBase;
 import model.Characters;
@@ -53,19 +53,19 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 	@Override
 	public Data<Phrases> get()
 	{
-		Data<Phrases> emp = null;
+		Data<Phrases> data = null;
 		try {
 	   
 	    //create ObjectMapper instance
 	    ObjectMapper objectMapper = objMapper;
 	    
 	    String phrasesData = (String) seedInMemoryDataBase("Phrases_tbl");
-	    emp = objectMapper.readValue(phrasesData, Data.class);
+	    data = objectMapper.readValue(phrasesData, Data.class);
 		
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		} 
-		return emp;
+		return data;
 	}
 	
 	@Override
@@ -76,14 +76,14 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 		ObjectMapper mapper = objMapper;		
 
 		try {
-			Phrases[] pp1 = mapper.readValue(str, Phrases[].class);
-			List<Phrases> ppl2 = Arrays.asList(mapper.readValue(str, Phrases[].class));
+			mapper.readValue(str, Phrases[].class);
+			List<Phrases> phrasesLst = Arrays.asList(mapper.readValue(str, Phrases[].class));
 			
-			Phrases result1 = ppl2.stream()                        
-	                .filter(x -> x.get_id().equals(id))        
+			Phrases result = phrasesLst.stream()                        
+	                .filter(o -> o.get_id().equals(id))        
 	                .findAny()                           
 	                .orElse(null);  
-			return result1; 
+			return result; 
 		} catch (JsonMappingException e) {
 
 			e.printStackTrace();
@@ -118,13 +118,13 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 		String str = gson.toJson(json);
 		ObjectMapper mapper = objMapper;
 		
-		List<Phrases> ppl2 = Arrays.asList(mapper.readValue(str, Phrases[].class));
+		List<Phrases> phrases = Arrays.asList(mapper.readValue(str, Phrases[].class));
 		
 		Phrases objP = (Phrases) obj;
 		if(getById(objP.get_id()) == null) 
 		{
 			
-			ArrayList<Phrases> lst = new ArrayList<Phrases>(ppl2);
+			ArrayList<Phrases> lst = new ArrayList<Phrases>(phrases);
 			lst.add(objP);
 			data.setData(lst);	
 			database.put("Phrases_tbl",gson.toJson(data));	
@@ -132,17 +132,17 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 		}
 		else 
 		{
-			Phrases james = ppl2.stream()
-					.filter(customer -> id.equals(customer.get_id()))
+			Phrases p = phrases.stream()
+					.filter(o -> id.equals(o.get_id()))
 					.findAny()
 					.orElse(null);
 			
-			int index = ppl2.indexOf(james); // index
+			int index = phrases.indexOf(p); // index
 			
-			ppl2.set(index, (Phrases)obj);
-			data.setData(new ArrayList<Phrases>(ppl2));	
+			phrases.set(index, (Phrases)obj);
+			data.setData(new ArrayList<Phrases>(phrases));	
 			database.put("Phrases_tbl",gson.toJson(data));	  
-			return james;
+			return p;
 		}	
 	}
 	
@@ -155,22 +155,22 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 		String str = gson.toJson(json);
 		ObjectMapper mapper = objMapper;
 		
-		Phrases[] pp1 = mapper.readValue(str, Phrases[].class);
-		List<Phrases> ppl2 = Arrays.asList(mapper.readValue(str, Phrases[].class)).stream()
+		mapper.readValue(str, Phrases[].class);
+		List<Phrases> phrasesLst = Arrays.asList(mapper.readValue(str, Phrases[].class)).stream()
 			    .filter(p -> !p.get_id().equals(id)).collect(Collectors.toList());
 		
-		data.setData(new ArrayList<Phrases>(ppl2));	
+		data.setData(new ArrayList<Phrases>(phrasesLst));	
 		database.put("Phrases_tbl",gson.toJson(data));	  
 		return data.getData();
 	}
 	
-	protected Object seedInMemoryDataBase(String empId) {    
+	protected Object seedInMemoryDataBase(String tblName) {    
 		      	    
 		 if(!database.containsKey("Phrases_tbl")){
 		  String phrasesData = GetFile("Files/phrases.json");   
 	      database.put("Phrases_tbl",phrasesData);	  
 	     }
-	      return database.get(empId);		
+	      return database.get(tblName);		
 	   }
 	
 }

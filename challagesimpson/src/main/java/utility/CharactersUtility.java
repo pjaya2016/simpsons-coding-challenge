@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import abstractClass.Utility;
+import abstract_class.Utility;
 import interfaces.IDataBase;
 import model.Characters;
 import model.Data;

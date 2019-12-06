@@ -1,4 +1,4 @@
-package abstractClass;
+package abstract_class;
 
 import java.util.HashMap;
 import java.util.Map;

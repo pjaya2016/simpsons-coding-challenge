@@ -35,25 +35,9 @@ import com.google.common.cache.LoadingCache;
 import com.google.common.collect.ImmutableList;
 
 @Component
-public class PharasesUtility extends Utility implements IDataBase 
+public class PharasesUtility extends Utility implements IDataBase<Phrases> 
 {
-	public Data<Characters> GetCharactersData()
-	{
-		Data<Characters> emp = null;
-		try {
-	   
-		//create ObjectMapper instance
-	    ObjectMapper objectMapper = objMapper;
-	    
-	    String charactersData = GetFile("Files/characters.json");
-	    emp = objectMapper.readValue(charactersData, Data.class);
-		
-		} catch (JsonProcessingException e) {
-			e.printStackTrace();
-		} 
-		return emp;
-	}
-	
+
 	@Autowired
 	public void GetObjectMapper(ObjectMapper objectMapper) 
 	{

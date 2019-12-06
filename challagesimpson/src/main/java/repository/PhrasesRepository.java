@@ -19,22 +19,22 @@ import model.Phrases;
 @Component
 public class PhrasesRepository implements IPhrasesRepository {
 	@Autowired
-	IDataBase utility;
+	IDataBase<Phrases> pharasesUtility;
 
 	@Override
 	public Data<Phrases> findAll() {
-		return utility.get();
+		return pharasesUtility.get();
 	}
 
 	@Override
 	public Phrases findById(String id) {
-		return utility.getById(id);
+		return pharasesUtility.getById(id);
 	}
 
 	@Override
 	public ArrayList<Phrases> deleteById(String id) {
 		try {
-			return utility.detete(id);
+			return pharasesUtility.detete(id);
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -48,7 +48,7 @@ public class PhrasesRepository implements IPhrasesRepository {
 	@Override
 	public Phrases save(Phrases p) {
 		try {
-			return utility.updateOrcreate(p.get_id(), p);
+			return pharasesUtility.updateOrcreate(p.get_id(), p);
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

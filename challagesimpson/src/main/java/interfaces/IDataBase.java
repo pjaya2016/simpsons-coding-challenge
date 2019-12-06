@@ -8,14 +8,14 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import model.Data;
 import model.Phrases;
 
-public interface IDataBase {
+public interface IDataBase<T> {
 
-	Data<Phrases> get();
+	Data<T> get();
 
-	Phrases getById(String id);
+	T getById(String id);
 
-	Phrases updateOrcreate(String id, Object obj) throws JsonMappingException, JsonProcessingException;
+	T updateOrcreate(String id, Object obj) throws JsonMappingException, JsonProcessingException;
 
-	ArrayList<Phrases> detete(String id) throws JsonMappingException, JsonProcessingException;
+	ArrayList<T> detete(String id) throws JsonMappingException, JsonProcessingException;
 
 }

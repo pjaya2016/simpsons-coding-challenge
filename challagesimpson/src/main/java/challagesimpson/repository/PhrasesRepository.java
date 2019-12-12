@@ -1,4 +1,4 @@
-package repository;
+package challagesimpson.repository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,17 +6,18 @@ import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.google.gson.Gson;
 
-import interfaces.IDataBase;
-import interfaces.IRepository;
+import challagesimpson.interfaces.IDataBase;
+import challagesimpson.interfaces.IRepository;
 import model.Data;
 import model.Phrases;
 
-@Component
+@Repository
 public class PhrasesRepository implements IRepository<Phrases> {
 	@Autowired
 	IDataBase<Phrases> pharasesUtility;

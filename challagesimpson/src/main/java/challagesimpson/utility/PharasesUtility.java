@@ -1,4 +1,4 @@
-package utility;
+package challagesimpson.utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,7 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import abstract_class.Utility;
-import interfaces.IDataBase;
+import challagesimpson.interfaces.IDataBase;
 import model.Data;
 import model.Phrases;
 

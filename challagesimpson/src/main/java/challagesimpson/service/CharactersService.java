@@ -1,14 +1,16 @@
-package service;
+package challagesimpson.service;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import interfaces.IRepository;
-import interfaces.IService;
+import challagesimpson.interfaces.IRepository;
+import challagesimpson.interfaces.IService;
 import model.Characters;
 import model.Data;
 
+@Component
 public class CharactersService implements IService<Characters> {
 	
 	@Autowired

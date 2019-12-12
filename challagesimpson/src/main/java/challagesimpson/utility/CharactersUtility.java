@@ -1,4 +1,4 @@
-package utility;
+package challagesimpson.utility;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -13,10 +15,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 import abstract_class.Utility;
-import interfaces.IDataBase;
+import challagesimpson.interfaces.IDataBase;
 import model.Characters;
 import model.Data;
 
+@Component
 public class CharactersUtility extends Utility implements IDataBase<Characters>
 {
 	

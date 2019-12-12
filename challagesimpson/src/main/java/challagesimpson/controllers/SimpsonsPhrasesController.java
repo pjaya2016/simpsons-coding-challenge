@@ -2,7 +2,7 @@ package challagesimpson.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import interfaces.IService;
+import challagesimpson.interfaces.IService;
 import model.Data;
 import model.Phrases;
 

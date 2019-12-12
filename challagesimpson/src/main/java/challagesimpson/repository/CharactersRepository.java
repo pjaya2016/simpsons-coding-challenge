@@ -1,17 +1,19 @@
-package repository;
+package challagesimpson.repository;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
-import interfaces.IDataBase;
-import interfaces.IRepository;
+import challagesimpson.interfaces.IDataBase;
+import challagesimpson.interfaces.IRepository;
 import model.Characters;
 import model.Data;
 import model.Phrases;
 
+@Repository
 public class CharactersRepository implements IRepository<Characters>{
 
 	@Autowired

@@ -1,12 +1,12 @@
-package service;
+package challagesimpson.service;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import interfaces.IService;
-import interfaces.IRepository;
+import challagesimpson.interfaces.IRepository;
+import challagesimpson.interfaces.IService;
 import model.Data;
 import model.Phrases;
 

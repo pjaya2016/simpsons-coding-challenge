@@ -50,7 +50,7 @@ public abstract class Utility {
 
 	protected Object seedInMemoryDataBase(String tblName) {
 
-		System.out.print(charactersTableName);
+
 		if (!database.containsKey(pharaseTableName)) {
 			String phrasesData = GetFile(pharaseFilePath);
 			database.put(pharaseTableName, phrasesData);

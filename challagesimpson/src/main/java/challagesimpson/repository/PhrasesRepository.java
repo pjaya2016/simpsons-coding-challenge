@@ -49,6 +49,7 @@ public class PhrasesRepository implements IRepository<Phrases> {
 	@Override
 	public Phrases save(Phrases p) {
 		try {
+			System.out.println(p.get_id());
 			return pharasesUtility.updateOrcreate(p.get_id(), p);
 		} catch (JsonMappingException e) {
 			// TODO Auto-generated catch block

@@ -18,6 +18,7 @@ import abstract_class.Utility;
 import challagesimpson.interfaces.IDataBase;
 import model.Characters;
 import model.Data;
+import model.Phrases;
 
 @Component
 public class CharactersUtility extends Utility implements IDataBase<Characters>
@@ -31,7 +32,10 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 		//create ObjectMapper instance
 	    ObjectMapper objectMapper = objMapper;
 	    
-	    String charactersData = GetFile("Files/characters.json");
+	    String charactersData = (String) seedInMemoryDataBase("Characters_tbl");
+	    
+	    System.out.print(charactersData);
+	    
 	    emp = objectMapper.readValue(charactersData, Data.class);
 		
 		} catch (JsonProcessingException e) {
@@ -69,17 +73,19 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 	@Override
 	public Characters updateOrcreate(String id, Object obj) throws JsonMappingException, JsonProcessingException {
 	    
+		
 		Data<Characters> data = get();
 		ArrayList<Object> json = (ArrayList<Object>)data.getData();
 		String str = gson.toJson(json);
 		ObjectMapper mapper = objMapper;
 		
-		List<Characters> charactersLst = Arrays.asList(mapper.readValue(str, Characters[].class));
+		List<Characters> characters = Arrays.asList(mapper.readValue(str, Characters[].class));
 		
 		Characters objP = (Characters) obj;
 		if(getById(objP.get_id()) == null) 
 		{
-			ArrayList<Characters> lst = new ArrayList<Characters>(charactersLst);
+			
+			ArrayList<Characters> lst = new ArrayList<Characters>(characters);
 			lst.add(objP);
 			data.setData(lst);	
 			database.put("Characters_tbl",gson.toJson(data));	
@@ -87,20 +93,18 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 		}
 		else 
 		{
-			Characters p = charactersLst.stream()
+			Characters p = characters.stream()
 					.filter(o -> id.equals(o.get_id()))
 					.findAny()
 					.orElse(null);
 			
-			int index = charactersLst.indexOf(p); // index
+			int index = characters.indexOf(p); // index
 			
-			charactersLst.set(index, (Characters)obj);
-			
-			data.setData(new ArrayList<Characters>(charactersLst));
-			
-			database.put("Characters_tbl",gson.toJson(charactersLst));	  
+			characters.set(index, (Characters)obj);
+			data.setData(new ArrayList<Characters>(characters));	
+			database.put("Characters_tbl",gson.toJson(data));	  
 			return (Characters) data.getData().get(index);
-		}
+		}	
 	}
 
 	@Override
@@ -117,7 +121,7 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 			    .filter(p -> !p.get_id().equals(id)).collect(Collectors.toList());
 		
 		data.setData(new ArrayList<Characters>(charactersLst));	
-		database.put("Phrases_tbl",gson.toJson(data));	  
+		database.put("Characters_tbl",gson.toJson(data));	  
 		return data.getData();
 	}
 

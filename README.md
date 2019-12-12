@@ -1,5 +1,22 @@
 # simpsons-coding-challenge
 
+## Get JWT Token - POST
+### H- Content-Type - appliction/json
+``` C#
+/* Request */
+
+{
+	"username":"simpson",
+	"password":"password"
+}
+
+/* Response */
+
+{
+    "token": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzaW1wc29uIiwiZXhwIjoxNTc2MTYzMDg0LCJpYXQiOjE1NzYxNDUwODR9.2aUObVhy6RxtpjsIoMf5ynnoKesQSsuufHV9mUXn3W4426GBXICAQfUGK31Bs2v0u0VO2VSCX0m-9f8rzB1K6A"
+}
+
+```
 ## Get all phrases - GET
 ### H- Content-Type - appliction/json
 ### H- Authorization - Bearer ${Token}

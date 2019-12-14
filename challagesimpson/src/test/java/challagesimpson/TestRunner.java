@@ -10,5 +10,10 @@ public class TestRunner {
     for (Failure failure : result.getFailures()) {
       System.out.println(failure.toString());
     }
+    
+    Result result2 = JUnitCore.runClasses(TestPharaseUtil.class);
+    for (Failure failure : result.getFailures()) {
+      System.out.println(failure.toString());
+    }
   }
 }

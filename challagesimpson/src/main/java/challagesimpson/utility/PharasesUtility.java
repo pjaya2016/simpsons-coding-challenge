@@ -13,8 +13,9 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import abstract_class.Utility;
+import challagesimpson.abstract_class.Utility;
 import challagesimpson.interfaces.IDataBase;
+import challagesimpson.datasim.DataBaseSim;
 import model.Data;
 import model.Phrases;
 
@@ -22,6 +23,13 @@ import model.Phrases;
 public class PharasesUtility extends Utility implements IDataBase<Phrases> 
 {
 
+	private DataBaseSim _dbs;
+	
+	public PharasesUtility(DataBaseSim DBS) 
+	{
+		_dbs = DBS;
+	}
+	
 	@Autowired
 	public void GetObjectMapper(ObjectMapper objectMapper) 
 	{
@@ -44,7 +52,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 	    //create ObjectMapper instance
 	    ObjectMapper objectMapper = objMapper;
 	    
-	    String phrasesData = (String) seedInMemoryDataBase("Phrases_tbl");
+	    String phrasesData = (String) _dbs.GetData("Phrases_tbl");
 	    data = objectMapper.readValue(phrasesData, Data.class);
 		
 		} catch (JsonProcessingException e) {
@@ -96,7 +104,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 			ArrayList<Phrases> lst = new ArrayList<Phrases>(phrases);
 			lst.add(objP);
 			data.setData(lst);	
-			database.put("Phrases_tbl",gson.toJson(data));	
+			_dbs.getDatabase().put("Phrases_tbl",gson.toJson(data));	
 			return objP;
 		}
 		else 
@@ -110,7 +118,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 			
 			phrases.set(index, (Phrases)obj);
 			data.setData(new ArrayList<Phrases>(phrases));	
-			database.put("Phrases_tbl",gson.toJson(data));	  
+			_dbs.getDatabase().put("Phrases_tbl",gson.toJson(data));	  
 			return (Phrases) data.getData().get(index);
 		}	
 	}
@@ -129,7 +137,7 @@ public class PharasesUtility extends Utility implements IDataBase<Phrases>
 			    .filter(p -> !p.get_id().equals(id)).collect(Collectors.toList());
 		
 		data.setData(new ArrayList<Phrases>(phrasesLst));	
-		database.put("Phrases_tbl",gson.toJson(data));	  
+		_dbs.getDatabase().put("Phrases_tbl",gson.toJson(data));	  
 		return data.getData();
 	}	
 }

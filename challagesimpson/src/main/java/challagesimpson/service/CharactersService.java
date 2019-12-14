@@ -13,27 +13,31 @@ import model.Data;
 @Component
 public class CharactersService implements IService<Characters> {
 	
-	@Autowired
-	private IRepository<Characters> charactersRepository;
+	private IRepository<Characters> _charactersRepository;
+	
+	public CharactersService(IRepository<Characters> charactersRepository) 
+	{
+		this._charactersRepository = charactersRepository;
+	}
 	
 	@Override
 	public Data<Characters> findAll() {
-		return charactersRepository.findAll();
+		return _charactersRepository.findAll();
 	}
 
 	@Override
 	public Characters findById(String id) {
-		return charactersRepository.findById(id);
+		return _charactersRepository.findById(id);
 	}
 
 	@Override
 	public ArrayList<Characters> deleteById(String id) {
-		return charactersRepository.deleteById(id);
+		return _charactersRepository.deleteById(id);
 	}
 
 	@Override
 	public Characters save(Characters p) {
-		return charactersRepository.save(p);
+		return _charactersRepository.save(p);
 	}
 
 }

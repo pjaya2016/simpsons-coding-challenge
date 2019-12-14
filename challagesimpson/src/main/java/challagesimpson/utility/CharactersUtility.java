@@ -14,33 +14,41 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
-import abstract_class.Utility;
+import challagesimpson.abstract_class.Utility;
 import challagesimpson.interfaces.IDataBase;
+import challagesimpson.datasim.DataBaseSim;
 import model.Characters;
 import model.Data;
-import model.Phrases;
+
 
 @Component
 public class CharactersUtility extends Utility implements IDataBase<Characters>
 {
 	
+	private DataBaseSim _dbs;
+	
+	public CharactersUtility(DataBaseSim DBS) 
+	{
+		_dbs = DBS;
+	}
+	
 	@SuppressWarnings("unchecked")
 	@Override
-	public Data<Characters> get() {
+	public Data<Characters> get() { 
 		Data<Characters> emp = null;
 		try {
 		//create ObjectMapper instance
 	    ObjectMapper objectMapper = objMapper;
 	    
-	    String charactersData = (String) seedInMemoryDataBase("Characters_tbl");
-	    
-	    System.out.print(charactersData);
+	    String charactersData = (String) _dbs.GetData("Characters_tbl");
 	    
 	    emp = objectMapper.readValue(charactersData, Data.class);
+
 		
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		} 
+			
 		return emp;
 	}
 
@@ -88,7 +96,7 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 			ArrayList<Characters> lst = new ArrayList<Characters>(characters);
 			lst.add(objP);
 			data.setData(lst);	
-			database.put("Characters_tbl",gson.toJson(data));	
+			_dbs.getDatabase().put("Characters_tbl",gson.toJson(data));	
 			return objP;
 		}
 		else 
@@ -102,7 +110,7 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 			
 			characters.set(index, (Characters)obj);
 			data.setData(new ArrayList<Characters>(characters));	
-			database.put("Characters_tbl",gson.toJson(data));	  
+			_dbs.getDatabase().put("Characters_tbl",gson.toJson(data));	  
 			return (Characters) data.getData().get(index);
 		}	
 	}
@@ -121,7 +129,7 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 			    .filter(p -> !p.get_id().equals(id)).collect(Collectors.toList());
 		
 		data.setData(new ArrayList<Characters>(charactersLst));	
-		database.put("Characters_tbl",gson.toJson(data));	  
+		_dbs.getDatabase().put("Characters_tbl",gson.toJson(data));	 
 		return data.getData();
 	}
 
@@ -136,4 +144,6 @@ public class CharactersUtility extends Utility implements IDataBase<Characters>
 	{
 		gson = gn;
 	}
+	
+	
 }

@@ -26,7 +26,7 @@ public class CharactersRepository implements IRepository<Characters>{
 
 	@Override
 	public Characters findById(String id) {
-		System.out.print(id);
+
 		return charactersUtility.getById(id);
 	}
 

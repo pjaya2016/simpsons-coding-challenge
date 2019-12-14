@@ -1,4 +1,4 @@
-package abstract_class;
+package challagesimpson.datasim;
 
 import java.io.File;
 import java.io.IOException;
@@ -7,32 +7,45 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Value;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
+import org.springframework.stereotype.Component;
 
 import challagesimpson.Application;
 
-public abstract class Utility {
-	protected ObjectMapper objMapper;
-	protected Gson gson;
+@Component
+public class DataBaseSim {
+
 	protected static Map<String, String> database = new HashMap<String, String>();
-	
+
+	public Map<String, String> getDatabase() {
+		return database;
+	}
+
 	@Value("${table.pharase}")
 	private String pharaseTableName;
 
 	@Value("${table.characters}")
 	private String charactersTableName;
-	
+
 	@Value("${file.phrases}")
 	private String pharaseFilePath;
-	
+
 	@Value("${file.characters}")
 	private String charactersFilePath;
-	
-	public abstract void GetObjectMapper(ObjectMapper objectMapper);
 
-	public abstract void GetObjectMapper(Gson gn);
+	public String GetData(String tblName) {
+
+		if (!database.containsKey(pharaseTableName)) {
+			String phrasesData = GetFile(pharaseFilePath);
+			database.put(pharaseTableName, phrasesData);
+		}
+
+		if (!database.containsKey(charactersTableName)) {
+			String charactersData = GetFile(charactersFilePath);
+			database.put(charactersTableName, charactersData);
+		}
+
+		return database.get(tblName);
+	}
 
 	protected String GetFile(String fileName) {
 		ClassLoader classLoader = new Application().getClass().getClassLoader();
@@ -45,22 +58,5 @@ public abstract class Utility {
 			e.printStackTrace();
 		}
 		return content;
-
-	}
-
-	protected Object seedInMemoryDataBase(String tblName) {
-
-
-		if (!database.containsKey(pharaseTableName)) {
-			String phrasesData = GetFile(pharaseFilePath);
-			database.put(pharaseTableName, phrasesData);
-		}
-		
-		if (!database.containsKey(charactersTableName)) {
-			String charactersData = GetFile(charactersFilePath);
-			database.put(charactersTableName, charactersData);
-		}
-		
-		return database.get(tblName);
 	}
 }
